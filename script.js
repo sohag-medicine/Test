@@ -1,40 +1,36 @@
-// Mock JSON data for testing purposes
-const mockUserData = [
-    {
-        "National ID": "30103112602877",
-        "username": "صلاح حسني فتح الباب احمد",
-        "Usercode": "1310202400589",
-        "password": "30103112602877"
-    },
-    {
-        "National ID": "30611292601216",
-        "username": "ادهم محمود عز عبد المجيد",
-        "Usercode": "1310202400588",
-        "password": "30611292601216"
-    }
-];
-
-// Function to retrieve information
+ Function to retrieve user information
 function retrieveInfo() {
-    console.log('Search button clicked');  // Check if the function is triggered
+    const nationalIDInput = document.getElementById(nationalID).value;
+    console.log('Searching for National ID', nationalIDInput);  Debugging
 
-    const nationalIDInput = document.getElementById("nationalID").value;
-    console.log('Input National ID:', nationalIDInput);  // Check the input
+     Fetch data from an external JSON file
+    fetch('userdata.json')
+        .then(response = {
+            if (!response.ok) {
+                throw new Error('Failed to load JSON data');
+            }
+            return response.json();
+        })
+        .then(userData = {
+             Find the user that matches the input National ID
+            const user = userData.find(user = user['National ID'] === nationalIDInput);
 
-    // Simulate data fetching by using mock data
-    const user = mockUserData.find(user => user['National ID'] === nationalIDInput);
-    console.log('Matched user:', user);  // Check if a user is matched
-
-    if (user) {
-        const tableRow = `
-            <tr>
-                <td>${user.username}</td>
-                <td>${user.Usercode}</td>
-                <td>${user.password}</td>
-            </tr>
-        `;
-        document.getElementById("resultBody").innerHTML = tableRow;
-    } else {
-        alert("User not found!");
-    }
+            if (user) {
+                 Inject the user data into the table
+                const tableRow = `
+                    tr
+                        td${user.username}td
+                        td${user.Usercode}td
+                        td${user.password}td
+                    tr
+                `;
+                document.getElementById(resultBody).innerHTML = tableRow;
+            } else {
+                alert(User not found!);
+                document.getElementById(resultBody).innerHTML = ;   Clear table if no user found
+            }
+        })
+        .catch(error = {
+            console.error(Error fetching user data, error);
+        });
 }
